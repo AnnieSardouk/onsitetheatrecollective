@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Current Season — Onsite Theatre Collective</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@200;300;400;500&family=EB+Garamond:wght@400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black: #0d0d0d;
+      --white: #f7f6f4;
+      --grey-light: #e8e6e2;
+      --grey-mid: #b0ada8;
+      --grey-dark: #4a4744;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--white);
+      color: var(--black);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      min-width: 900px;
+      overflow-x: hidden;
+    }
+
+    em, i { font-style: normal; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 60px;
+      background: rgba(247, 246, 244, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--grey-light);
+    }
+
+    .nav-back {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--grey-mid);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-back:hover { color: var(--black); }
+
+    .nav-back svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+    }
+
+    .nav-logo {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .nav-logo svg {
+      height: 60px;
+      width: 60px;
+    }
+
+    .nav-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 200;
+      font-size: 1.05rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--black);
+      text-decoration: none;
+    }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      padding-top: 140px;
+      padding-bottom: 80px;
+      padding-left: 60px;
+      padding-right: 60px;
+      border-bottom: 1px solid var(--grey-light);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-hero-bg {
+      position: absolute;
+      right: -60px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22vw;
+      font-weight: 300;
+      font-style: normal;
+      color: var(--grey-light);
+      line-height: 1;
+      user-select: none;
+      pointer-events: none;
+      letter-spacing: -0.05em;
+      opacity: 0.6;
+    }
+
+    .season-eyebrow {
+      font-size: 0.62rem;
+      letter-spacing: 0.45em;
+      text-transform: uppercase;
+      color: var(--grey-mid);
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.2s forwards;
+    }
+
+    .season-page-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 300;
+      font-style: normal;
+      letter-spacing: -0.01em;
+      color: var(--grey-dark);
+      margin-bottom: 12px;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.3s forwards;
+    }
+
+    .season-show-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.2rem, 6.5vw, 6rem);
+      font-weight: 300;
+      font-style: normal;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.4s forwards;
+    }
+
+    .season-playwright {
+      margin-top: 20px;
+      font-family: 'EB Garamond', serif;
+      font-style: normal;
+      font-size: 1.2rem;
+      color: var(--grey-mid);
+      opacity: 0;
+      animation: fadeUp 0.7s 0.5s forwards;
+    }
+
+    /* ── SHOW CONTENT ── */
+    .show-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      min-height: 70vh;
+    }
+
+    .show-image-col {
+      position: relative;
+      background: var(--grey-light);
+      min-height: 600px;
+      overflow: hidden;
+    }
+
+    .show-image-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      background: #d8d6d2;
+    }
+
+    .show-image-placeholder .ph-icon {
+      width: 72px;
+      height: 72px;
+      border: 1px solid rgba(0,0,0,0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .show-image-placeholder .ph-icon svg {
+      width: 28px;
+      height: 28px;
+      stroke: rgba(0,0,0,0.25);
+      fill: none;
+    }
+
+    .show-image-placeholder p {
+      font-size: 0.62rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.3);
+    }
+
+    .show-image-placeholder img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .show-details-col {
+      padding: 72px 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-left: 1px solid var(--grey-light);
+    }
+
+    .show-details-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--grey-mid);
+      margin-bottom: 24px;
+    }
+
+    .show-description {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.12rem;
+      font-style: normal;
+      line-height: 1.9;
+      color: var(--grey-dark);
+      margin-bottom: 48px;
+    }
+
+    .show-description strong {
+      color: var(--black);
+      font-weight: 400;
+    }
+
+    .show-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 48px;
+      padding: 28px 0;
+      border-top: 1px solid var(--grey-light);
+      border-bottom: 1px solid var(--grey-light);
+    }
+
+    .meta-row {
+      display: flex;
+      gap: 20px;
+      align-items: baseline;
+    }
+
+    .meta-label {
+      font-size: 0.58rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--grey-mid);
+      min-width: 80px;
+    }
+
+    .meta-value {
+      font-family: 'EB Garamond', serif;
+      font-style: normal;
+      font-size: 1rem;
+      color: var(--grey-dark);
+    }
+
+    .btn-tickets {
+      display: inline-block;
+      padding: 16px 40px;
+      background: var(--black);
+      border: 1px solid var(--black);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      font-size: 0.68rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: not-allowed;
+      opacity: 0.5;
+      width: fit-content;
+    }
+
+    .btn-tickets-note {
+      display: block;
+      margin-top: 10px;
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      color: var(--grey-mid);
+      text-transform: uppercase;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--black);
+      color: var(--white);
+      padding: 72px 60px 40px;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 40px;
+      padding-bottom: 56px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .footer-brand .footer-logo svg {
+      width: 56px;
+      height: 56px;
+      margin-bottom: 20px;
+    }
+
+    .footer-brand-name {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 200;
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 14px;
+    }
+
+    .footer-tagline {
+      font-family: 'EB Garamond', serif;
+      font-style: normal;
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.35);
+      line-height: 1.6;
+    }
+
+    .footer-col-title {
+      font-size: 0.58rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 20px;
+    }
+
+    .footer-contact p {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+
+    .footer-contact a {
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-contact a:hover { color: #fff; }
+
+    .social-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: rgba(255,255,255,0.55);
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+
+    .social-link:hover { color: #fff; }
+
+    .social-link .s-icon {
+      width: 32px;
+      height: 32px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s;
+    }
+
+    .social-link:hover .s-icon { border-color: rgba(255,255,255,0.4); }
+
+    .social-link svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+    }
+
+    .footer-bottom {
+      padding-top: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-bottom p {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-back">
+      <svg viewBox="0 0 24 24" stroke-width="1.5"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to Main
+    </a>
+    <div class="nav-logo">
+      <svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M250 52 C176 52,115 88,82 143 C52 193,48 248,62 296 C80 358,128 406,192 428 C222 438,255 442,288 436 C352 424,402 384,428 328 C452 276,450 212,424 162 C392 102,328 58,255 52"
+              stroke="#0d0d0d" stroke-width="10" stroke-linecap="round" fill="none"/>
+        <path d="M253 58 C183 56,122 92,90 147 C60 198,56 252,70 300 C88 362,135 409,198 430 C232 441,268 444,302 436"
+              stroke="#0d0d0d" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.28"/>
+        <path d="M152 420 C180 448,216 460,252 462"
+              stroke="#0d0d0d" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.35"/>
+        <text x="250" y="263" text-anchor="middle"
+              font-family="'Montserrat', sans-serif"
+              font-size="22" font-weight="300"
+              letter-spacing="4"
+              fill="#0d0d0d">onsite theatre collective</text>
+      </svg>
+    </div>
+    <a href="index.html" class="nav-title">Onsite Theatre Collective</a>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <header class="page-hero">
+    <div class="page-hero-bg" aria-hidden="true">S25</div>
+    <p class="season-eyebrow">2025 Season</p>
+    <p class="season-page-title">Current Season</p>
+    <h1 class="season-show-title">Girls &amp; Boys</h1>
+    <p class="season-playwright">by Dennis Kelly</p>
+  </header>
+
+  <!-- SHOW CONTENT -->
+  <section class="show-content">
+    <div class="show-image-col">
+      <div class="show-image-placeholder">
+        <!-- To add your production photo, replace the contents of this div with: -->
+        <!-- <img src="your-photo.jpg" alt="Girls & Boys production photo" /> -->
+        <div class="ph-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        </div>
+        <p>Production photo — upload to replace</p>
+      </div>
+    </div>
+
+    <div class="show-details-col reveal">
+      <p class="show-details-label">About the Show</p>
+      <p class="show-description">
+        <strong>Girls &amp; Boys</strong> is a gripping, darkly humorous one-person show by acclaimed playwright Dennis Kelly.
+        A woman tells the story of how she met the man she would marry — a story of love, ambition, and the seductive
+        power of everyday optimism. But beneath the surface of this seemingly ordinary life, something far more
+        unsettling is taking shape.<br><br>
+        Told with raw intimacy and wit, Girls &amp; Boys is a devastating meditation on gender, violence,
+        and the stories we tell ourselves about the people we love. This Onsite Theatre Collective production
+        reimagines the play within a site-specific environment, bringing its urgent emotional landscape into
+        direct contact with its audience in a way no traditional stage can offer.
+      </p>
+
+      <div class="show-meta">
+        <div class="meta-row">
+          <span class="meta-label">Written by</span>
+          <span class="meta-value">Dennis Kelly</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-label">Directed by</span>
+          <span class="meta-value">TBA</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-label">Dates</span>
+          <span class="meta-value">Coming Soon — 2025</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-label">Venue</span>
+          <span class="meta-value">Site TBA — Tampa Bay, FL</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-label">Runtime</span>
+          <span class="meta-value">Approx. 90 minutes, no intermission</span>
+        </div>
+      </div>
+
+      <button class="btn-tickets" disabled>Purchase Tickets</button>
+      <span class="btn-tickets-note">Ticketing coming soon</span>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M100 18 C52 18,14 56,14 100 C14 148,55 184,102 182 C149 180,186 144,186 100 C186 56,149 18,100 18" stroke="rgba(255,255,255,0.7)" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+            <path d="M100 20 C54 20,17 57,17 100 C17 145,55 182,100 182" stroke="rgba(255,255,255,0.7)" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.3"/>
+          </svg>
+        </div>
+        <p class="footer-brand-name">Onsite Theatre Collective</p>
+        <p class="footer-tagline">Theatre made for the<br>space it inhabits.</p>
+      </div>
+
+      <div>
+        <p class="footer-col-title">Contact</p>
+        <div class="footer-contact">
+          <p>Tampa Bay, Florida</p>
+          <p><a href="mailto:hello@onsitetheatre.com">hello@onsitetheatre.com</a></p>
+          <p><a href="tel:+18005550000">(800) 555-0000</a></p>
+        </div>
+      </div>
+
+      <div>
+        <p class="footer-col-title">Follow Us</p>
+        <div class="social-links">
+          <a href="#" class="social-link">
+            <span class="s-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </span>
+            Instagram
+          </a>
+          <a href="#" class="social-link">
+            <span class="s-icon">
+              <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </span>
+            Facebook
+          </a>
+          <a href="#" class="social-link">
+            <span class="s-icon">
+              <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.16 8.16 0 004.77 1.52V6.76a4.85 4.85 0 01-1-.07z"/></svg>
+            </span>
+            TikTok
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Onsite Theatre Collective. All rights reserved.</p>
+      <p>Tampa Bay, Florida</p>
+    </div>
+  </footer>
+
+  <script>
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
