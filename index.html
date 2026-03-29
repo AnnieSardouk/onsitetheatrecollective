@@ -493,9 +493,9 @@
     }
 
     .team-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
     }
 
     .team-member {
@@ -506,7 +506,7 @@
       border-top: 1px solid var(--grey-light);
       align-items: start;
     }
-
+    
     .team-member:last-child { border-bottom: 1px solid var(--grey-light); }
 
     .member-photo {
@@ -861,39 +861,6 @@
           <h3 class="member-name">Name Surname</h3>
           <p class="member-title">Title TBD</p>
           <p class="member-desc">A core ensemble member with extensive stage experience across drama, devised work, and experimental forms. They bring raw authenticity and physical presence to every role, and are deeply committed to the collective's community outreach efforts.</p>
-        </div>
-      </div>
-
-      <div class="team-member reveal">
-        <div class="member-photo"><div class="member-photo-placeholder">
-          <svg viewBox="0 0 24 24" stroke-width="1"><circle cx="12" cy="8" r="4"/><path d="M4 20 c0-4 3.6-7 8-7 s8 3 8 7"/></svg>
-        </div></div>
-        <div class="member-info">
-          <h3 class="member-name">Name Surname</h3>
-          <p class="member-title">Title TBD</p>
-          <p class="member-desc">With a background in movement theatre and physical performance, they bring an embodied, kinetic energy to the stage. Their work spans classical text and new writing, always with an eye toward the unexpected.</p>
-        </div>
-      </div>
-
-      <div class="team-member reveal">
-        <div class="member-photo"><div class="member-photo-placeholder">
-          <svg viewBox="0 0 24 24" stroke-width="1"><circle cx="12" cy="8" r="4"/><path d="M4 20 c0-4 3.6-7 8-7 s8 3 8 7"/></svg>
-        </div></div>
-        <div class="member-info">
-          <h3 class="member-name">Name Surname</h3>
-          <p class="member-title">Title TBD</p>
-          <p class="member-desc">The organizational backbone of every production, they keep the ensemble running smoothly across rehearsals, site visits, and performances. Their calm, meticulous approach ensures that the creative vision reaches the stage intact.</p>
-        </div>
-      </div>
-
-      <div class="team-member reveal">
-        <div class="member-photo"><div class="member-photo-placeholder">
-          <svg viewBox="0 0 24 24" stroke-width="1"><circle cx="12" cy="8" r="4"/><path d="M4 20 c0-4 3.6-7 8-7 s8 3 8 7"/></svg>
-        </div></div>
-        <div class="member-info">
-          <h3 class="member-name">Name Surname</h3>
-          <p class="member-title">Title TBD</p>
-          <p class="member-desc">Committed to building bridges between the collective and the wider community, they lead educational workshops, partnership initiatives, and audience development programs that bring new voices and new audiences to the work.</p>
         </div>
       </div>
 
